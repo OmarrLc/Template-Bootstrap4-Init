@@ -11,8 +11,8 @@ gulp.task('sass', () => {
         'src/scss/*.scss'
     ])
 
-        /* comprimir y convierte a  css el sass */
-        .pipe(sass({ outputStyle: 'compressed' }))
+    /* comprimir y convierte a  css el sass */
+    .pipe(sass({ outputStyle: 'compressed' }))
         /* donde se van a guardar lo procesado */
         .pipe(gulp.dest('src/css'))
         /* lo va inyectar en el html con browserSync */
@@ -23,38 +23,38 @@ gulp.task('sass', () => {
 gulp.task('js', () => {
 
     return gulp.src([
-        'node_modules/bootstrap/dist/js/bootstrap.min.js',
-        'node_modules/jquery/dist/jquery.min.js',
-        'node_modules/popper.js/dist/umd/popper.min.js'
-    ])
+            'node_modules/bootstrap/dist/js/bootstrap.min.js',
+            'node_modules/jquery/dist/jquery.min.js',
+            'node_modules/popper.js/dist/umd/popper.min.js',
+            'node_modules/@fortawesome/fontawesome-free/js/all.js'
+        ])
         .pipe(gulp.dest('src/js'))
-            .pipe(browserSync.stream());
+        .pipe(browserSync.stream());
 });
 
 //Tarea serve:
-gulp.task('serve', gulp.series('sass', function(){
+gulp.task('serve', gulp.series('sass', function() {
     browserSync.init({
-      server: './src'
+        server: './src'
     });
-  
+
     gulp.watch([
-      'node_modules/bootstrap/scss/bootstrap.scss',
-      'src/scss/*.scss'
-      ], gulp.series('sass')
-    );
-  
-   gulp.watch('src/*.html').on('change', browserSync.reload);
-  }));
+        'node_modules/bootstrap/scss/bootstrap.scss',
+        'src/scss/*.scss'
+    ], gulp.series('sass'));
+
+    gulp.watch('src/*.html').on('change', browserSync.reload);
+}));
 
 gulp.task('font-awesome', () => {
     /* copia los archivos hacia src/css */
-    return gulp.src('node_modules/font-awesome/css/font-awesome.min.css')
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/css/all.css')
         .pipe(gulp.dest('src/css'));
 });
 
 gulp.task('fonts', () => {
     /* copias las fuentes necesarios para fontawesome a src/css */
-    return gulp.src('node_modules/font-awesome/fonts/*')
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/fonts/webfonts/*')
         .pipe(gulp.dest('src/fonts'));
 });
 
